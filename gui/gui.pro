@@ -41,9 +41,9 @@ DEPENDPATH += $$PWD/../dynamiclib/include
 # QMAKE_COPY: https://wiki.qt.io/Undocumented_QMake
 win32 {
     QMAKE_PRE_LINK = "$$QMAKE_COPY $$OUT_PWD/../dynamiclib/*.dll $$OUT_PWD"
-} else:unix:!macx {
+} unix:!macx {
     QMAKE_PRE_LINK = "$$QMAKE_COPY $$OUT_PWD/../dynamiclib/libdynamiclib.so $$OUT_PWD"
-} else:macx {
+} macx {
     QMAKE_PRE_LINK = "$$QMAKE_COPY $$OUT_PWD/../dynamiclib/libdynamiclib.dylib $$OUT_PWD"
 } else {
     error("OS not configured!")
