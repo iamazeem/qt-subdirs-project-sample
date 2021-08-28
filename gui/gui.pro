@@ -29,7 +29,7 @@ QML_DESIGNER_IMPORT_PATH =
 
 # Link dynamiclib
 LIBS += -L$$OUT_PWD/../dynamiclib/ -ldynamiclib
-unix:{
+unix|macx {
     #QMAKE_LFLAGS += "-Wl,-rpath,\'\$$ORIGIN\'"
     QMAKE_RPATHDIR += .
 }
@@ -41,7 +41,7 @@ DEPENDPATH += $$PWD/../dynamiclib/include
 # QMAKE_COPY: https://wiki.qt.io/Undocumented_QMake
 win32 {
     QMAKE_PRE_LINK = "$$QMAKE_COPY $$OUT_PWD/../dynamiclib/*.dll $$OUT_PWD"
-} else:unix {
+} else:unix:!macx {
     QMAKE_PRE_LINK = "$$QMAKE_COPY $$OUT_PWD/../dynamiclib/libdynamiclib.so $$OUT_PWD"
 } else:macx {
     QMAKE_PRE_LINK = "$$QMAKE_COPY $$OUT_PWD/../dynamiclib/libdynamiclib.dylib $$OUT_PWD"
