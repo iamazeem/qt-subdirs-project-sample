@@ -27,9 +27,15 @@ jobs:
         
     - name: Build
       run: |
+        tree --dirsfirst .
         echo $Qt5_DIR
         export PATH=$Qt5_DIR/bin:$PATH
         qmake --version
         mkdir build && cd build
-        qmake ../qt-subdirs-project-sample.pro
-        make
+        echo
+        qmake ../qt-subdirs-project-sample.pro CONFIG+=debug CONFIG+=qml_debug && make
+        echo
+        qmake ../qt-subdirs-project-sample.pro "CONFIG+=release" && make
+        echo
+        cd ..
+        tree --dirsfirst ./build
