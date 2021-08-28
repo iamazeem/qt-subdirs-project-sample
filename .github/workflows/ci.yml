@@ -25,17 +25,21 @@ jobs:
       with:
         version: 5.12.9
         
-    - name: Build
+    - name: Build (debug and release)
       run: |
         tree --dirsfirst .
-        echo $Qt5_DIR
+        echo "Qt5_DIR: $Qt5_DIR"
         export PATH=$Qt5_DIR/bin:$PATH
         qmake --version
+        echo
         mkdir build && cd build
+        echo "DEBUG:"
+        mkdir debug && cd debug
+        qmake ../../qt-subdirs-project-sample.pro CONFIG+=debug CONFIG+=qml_debug && make
+        echo && cd .. && tree --dirsfirst ./debug
         echo
-        qmake ../qt-subdirs-project-sample.pro CONFIG+=debug CONFIG+=qml_debug && make
-        echo
-        qmake ../qt-subdirs-project-sample.pro "CONFIG+=release" && make
-        echo
-        cd ..
-        tree --dirsfirst ./build
+        echo "RELEASE:"
+        mkdir release && cd release
+        qmake ../../qt-subdirs-project-sample.pro "CONFIG+=release" && make
+        echo && cd .. && tree --dirsfirst ./release
+        echo "--- [DONE] ---"
