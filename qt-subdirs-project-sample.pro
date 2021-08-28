@@ -12,9 +12,9 @@ TEMPLATE = subdirs
 
 SUBDIRS += \
     staticlib \
+    cli \
     dynamiclib \
-    gui \
-    cli
+    gui
 
 cli.depends = staticlib
 gui.depends = dynamiclib
