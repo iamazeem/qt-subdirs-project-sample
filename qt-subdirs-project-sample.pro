@@ -18,3 +18,6 @@ SUBDIRS += \
 
 cli.depends = staticlib
 gui.depends = dynamiclib
+
+debug:message("Debug build")
+release:message("Release build")

@@ -24,17 +24,13 @@ SOURCES += \
 HEADERS += \
     include/test.hpp
 
-win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../staticlib/release/ -lstaticlib
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../staticlib/debug/ -lstaticlib
-else:unix: LIBS += -L$$OUT_PWD/../staticlib/ -lstaticlib
+LIBS += -L$$OUT_PWD/../staticlib/ -lstaticlib
 
 INCLUDEPATH += $$PWD/../staticlib/include
 DEPENDPATH += $$PWD/../staticlib/include
 
-win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../staticlib/release/libstaticlib.a
-else:win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../staticlib/debug/libstaticlib.a
-else:win32:!win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../staticlib/release/staticlib.lib
-else:win32:!win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../staticlib/debug/staticlib.lib
+win32-g++: PRE_TARGETDEPS += $$OUT_PWD/../staticlib/libstaticlib.a
+else:win32:!win32-g++: PRE_TARGETDEPS += $$OUT_PWD/../staticlib/staticlib.lib
 else:unix: PRE_TARGETDEPS += $$OUT_PWD/../staticlib/libstaticlib.a
 
 # Default rules for deployment.
