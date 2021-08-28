@@ -1,0 +1,45 @@
+name: ci
+
+on:
+  push:
+    paths-ignore:
+      - '**.md'
+  pull_request:
+    paths-ignore:
+      - '**.md'
+
+jobs:
+  build:
+    name: Build
+    strategy:
+      matrix:
+        os: [ubuntu-18.04]
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Install Qt
+      uses: jurplel/install-qt-action@v2
+      with:
+        version: 5.12.9
+        
+    - name: Build (debug and release)
+      run: |
+        tree --dirsfirst .
+        echo "Qt5_DIR: $Qt5_DIR"
+        export PATH=$Qt5_DIR/bin:$PATH
+        qmake --version
+        echo
+        mkdir build && cd build
+        echo "DEBUG:"
+        mkdir debug && cd debug
+        qmake ../../qt-subdirs-project-sample.pro CONFIG+=debug CONFIG+=qml_debug && make
+        echo && cd .. && tree --dirsfirst ./debug
+        echo
+        echo "RELEASE:"
+        mkdir release && cd release
+        qmake ../../qt-subdirs-project-sample.pro "CONFIG+=release" && make
+        echo && cd .. && tree --dirsfirst ./release
+        echo "--- [DONE] ---"
