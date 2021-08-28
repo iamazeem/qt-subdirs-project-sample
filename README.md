@@ -1,5 +1,7 @@
 # qt-subdirs-project-sample
 
+[![ci](https://github.com/iamazeem/qt-subdirs-project-sample/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/iamazeem/qt-subdirs-project-sample/actions/workflows/ci.yml)
+
 Qt SUBDIRS Project Sample with multiple subprojects
 
 ## Source Directory Structure
