@@ -39,11 +39,14 @@ DEPENDPATH += $$PWD/../dynamiclib/include
 
 # Copy dynamic library files (working)
 # QMAKE_COPY: https://wiki.qt.io/Undocumented_QMake
-# https://stackoverflow.com/a/2853740/7670262
 win32 {
     QMAKE_PRE_LINK = "$$QMAKE_COPY $$OUT_PWD/../dynamiclib/*.dll $$OUT_PWD"
-} else {
+} else:unix {
     QMAKE_PRE_LINK = "$$QMAKE_COPY $$OUT_PWD/../dynamiclib/libdynamiclib.so $$OUT_PWD"
+} else:macx {
+    QMAKE_PRE_LINK = "$$QMAKE_COPY $$OUT_PWD/../dynamiclib/libdynamiclib.dylib $$OUT_PWD"
+} else {
+    error("OS not configured!")
 }
 
 # Remove the generated cpp files by qmlcachegen in release mode
