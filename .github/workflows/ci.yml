@@ -27,6 +27,9 @@ jobs:
         
     - name: Build (debug and release)
       run: |
+        if [ "$RUNNER_OS" == "macOS" ]; then
+          brew install tree
+        fi
         tree --dirsfirst .
         echo "Qt5_DIR: $Qt5_DIR"
         export PATH=$Qt5_DIR/bin:$PATH
